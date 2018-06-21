@@ -95,14 +95,14 @@ func query(words []string, withVoice, withMore, isMulti bool) {
 		doc.Find(".trans-container > ul > p").Each(func(i int, s *goquery.Selection) {
 			partOfSpeech := s.Children().Not(".contentTitle").Text()
 			if partOfSpeech != "" {
-				fmt.Printf("%14s ", color.MagentaString(partOfSpeech))
+				fmt.Printf("%14s ", color.CyanString(partOfSpeech))
 			}
 
 			meanings := []string{}
 			s.Find(".contentTitle > .search-js").Each(func(ii int, ss *goquery.Selection) {
 				meanings = append(meanings, ss.Text())
 			})
-			fmt.Printf("%s\n", color.GreenString(strings.Join(meanings, "; ")))
+			fmt.Printf("%s\n", color.WhiteString(strings.Join(meanings, "; ")))
 		})
 	} else {
 
@@ -111,8 +111,8 @@ func query(words []string, withVoice, withMore, isMulti bool) {
 			color.Blue("\r\n    word '%s' not found, do you mean?", queryString)
 			fmt.Println()
 			for _, guess := range hint {
-				color.Green("    %s", guess[0])
-				color.Magenta("    %s", guess[1])
+				color.White("    %s", guess[0])
+				color.Cyan("    %s", guess[1])
 			}
 			fmt.Println()
 			return
@@ -120,12 +120,12 @@ func query(words []string, withVoice, withMore, isMulti bool) {
 
 		// Find the pronounce
 		if !isMulti {
-			color.Green("\r\n    %s", getPronounce(doc))
+			color.White("\r\n    %s", getPronounce(doc))
 		}
 
 		// Find the result
 		result := doc.Find("div#phrsListTab > div.trans-container > ul").Text()
-		color.Green(result)
+		color.White(result)
 	}
 
 	// Show examples
@@ -133,8 +133,8 @@ func query(words []string, withVoice, withMore, isMulti bool) {
 	if len(sentences) > 0 {
 		fmt.Println()
 		for i, sentence := range sentences {
-			color.Green(" %2d.%s", i+1, sentence[0])
-			color.Magenta("    %s", sentence[1])
+			color.White(" %2d.%s", i+1, sentence[0])
+			color.Cyan("    %s", sentence[1])
 		}
 		fmt.Println()
 	}
